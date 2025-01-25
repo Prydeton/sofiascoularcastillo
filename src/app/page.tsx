@@ -1,4 +1,4 @@
-export const Showcase = () => {
+const Showcase = () => {
   return <>Sofia's Portfolio - Coming soon</>
 }
 

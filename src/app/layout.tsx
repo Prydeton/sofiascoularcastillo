@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   keywords: ['TODO'],
 }
 
-export const RootLayout = ({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode
