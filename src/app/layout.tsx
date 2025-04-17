@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import '@/app/styles/globals.css'
 import { bodyFont, headingFont } from '@/app/styles/fonts'
+import { Navbar } from '@/components'
 
 export const metadata: Metadata = {
   title: 'Sofia Scoular Castillo',
@@ -15,7 +16,10 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en" className={`${headingFont.variable} ${bodyFont.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+      </body>
     </html>
   )
 }

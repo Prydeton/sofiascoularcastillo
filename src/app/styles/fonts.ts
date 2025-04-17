@@ -1,4 +1,4 @@
-import { Lato, Montserrat } from 'next/font/google'
+import { Inter, Lato, Montserrat } from 'next/font/google'
 
 export const headingFont = Montserrat({
   subsets: ['latin'],
@@ -15,4 +15,11 @@ export const bodyFont = Lato({
   display: 'swap',
   fallback: ['sans-serif'],
   variable: '--font-body',
+})
+
+export const interFont = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-inter',
 })
