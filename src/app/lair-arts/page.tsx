@@ -26,15 +26,17 @@ const fullPhoto: PhotoAlbumImage = { src: '/media/lair-arts/6.jpeg', width: 3024
 const LairArts = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
-  const defaultLayoutPluginInstance = defaultLayoutPlugin()
+  const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    sidebarTabs: () => [],
+  })
 
   return (
-    <div className="w-[80%] mx-auto px-4 sm:px-6 py-8 flex gap-4 flex-col">
-      <div className="mb-2 max-w-4xl mx-auto text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">L'air Arts Typeface and Logo Redesign</h2>
+    <div className="w-[90%] mx-auto px-4 sm:px-6 md:py-4">
+      <div className="mb-12 max-w-4xl mx-auto text-center">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">L'air Arts Typeface and Logo Redesign</h2>
       </div>
 
-      <div className="max-w-3xl mx-auto w-full">
+      <div className="max-w-4xl mx-auto w-full">
         <div className="h-[600px] sm:h-[800px] border border-gray-200 rounded-lg overflow-hidden">
           <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
             <Viewer

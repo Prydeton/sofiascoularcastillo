@@ -7,12 +7,14 @@ import '@react-pdf-viewer/core/lib/styles/index.css'
 import '@react-pdf-viewer/default-layout/lib/styles/index.css'
 
 const SceneArtFair = () => {
-  const defaultLayoutPluginInstance = defaultLayoutPlugin()
+  const defaultLayoutPluginInstance = defaultLayoutPlugin({
+    sidebarTabs: () => [],
+  })
 
   return (
-    <div className="w-[80%] mx-auto px-4 sm:px-6 py-8">
+    <div className="w-[90%] mx-auto px-4 sm:px-6 md:py-4">
       <div className="mb-12 max-w-4xl mx-auto text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Scene Art Fair</h2>
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Scene Art Fair</h2>
         <p className="mb-6 sm:mb-8 text-sm sm:text-base leading-relaxed">
           SCENE Art Fair was developed as a hypothetical project by me and a group of peers, aiming to rethink how
           emerging artists engage with the art market. Focused on artists aged 16-27, the fair was designed to foster
