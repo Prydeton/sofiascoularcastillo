@@ -4,9 +4,11 @@ interface Props {
   params: {
     category: string
   }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-const categories = ['graphics', 'film', 'multimedia', 'photography', 'sculptural', 'fine-arts']
+const categories = ['graphics', 'film', 'multimedia', 'photography', 'sculptural', 'fine-arts'] as const
+type Category = (typeof categories)[number]
 
 export function generateStaticParams() {
   return categories.map((category) => ({
@@ -14,8 +16,10 @@ export function generateStaticParams() {
   }))
 }
 
-export default function GalleryPage({ params }: Props) {
-  if (!categories.includes(params.category)) {
+const CategoryGallery = ({ params }: Props) => {
+  const category = params.category as Category
+
+  if (!categories.includes(category)) {
     notFound()
   }
 
@@ -27,3 +31,5 @@ export default function GalleryPage({ params }: Props) {
     </div>
   )
 }
+
+export default CategoryGallery
