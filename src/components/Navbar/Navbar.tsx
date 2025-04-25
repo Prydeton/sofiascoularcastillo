@@ -16,7 +16,11 @@ const Navbar = () => {
   return (
     <nav className="w-full p-4 sm:relative fixed top-0 left-0 bg-white z-40">
       <div className="flex justify-center items-center">
-        <h1 className="text-2xl sm:text-2xl md:text-4xl font-bold w-full text-center">SOFIA SCOULAR CASTILLO</h1>
+        <Link href="/" className="w-full">
+          <h1 className="text-2xl sm:text-2xl md:text-4xl font-bold text-center hover:opacity-80 transition-opacity">
+            SOFIA SCOULAR CASTILLO
+          </h1>
+        </Link>
         <button
           type="button"
           className="sm:hidden absolute right-4 top-1/2 -translate-y-1/2"

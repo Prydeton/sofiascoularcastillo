@@ -22,7 +22,8 @@ export default function GalleryPage({ params }: Props) {
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-8 capitalize">{params.category}</h1>
-      {/* Gallery content will go here */}
+      Gallery content for {params.category} category will be displayed here.
+      <p className="mt-4 text-lg">Coming soon...</p>
     </div>
   )
 }
