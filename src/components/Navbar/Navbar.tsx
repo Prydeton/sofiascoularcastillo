@@ -8,27 +8,15 @@ import { useState } from 'react'
 const MAIN_LINKS = ['About', 'Showcase', 'Contact'] as const
 const GALLERY_LINKS = ['Graphics', 'Film', 'Multimedia', 'Photography', 'Sculptural', 'Fine Arts'] as const
 
-interface NavLinkProps {
-  href: string
-  children: string
-  className?: string
-}
-
-const NavLink = ({ href, children, className = '' }: NavLinkProps) => (
-  <Link href={href} className={`text-sm md:text-base hover:underline ${interFont.className} ${className}`}>
-    {children}
-  </Link>
-)
-
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev)
 
   return (
-    <nav className="w-full p-4 relative">
+    <nav className="w-full p-4 sm:relative fixed top-0 left-0 bg-white z-40">
       <div className="flex justify-center items-center">
-        <h1 className="text-2xl sm:text-2xl md:text-3xl font-bold w-full text-center">SOFIA SCOULAR CASTILLO</h1>
+        <h1 className="text-2xl sm:text-2xl md:text-4xl font-bold w-full text-center">SOFIA SCOULAR CASTILLO</h1>
         <button
           type="button"
           className="sm:hidden absolute right-4 top-1/2 -translate-y-1/2"
@@ -67,7 +55,7 @@ const Navbar = () => {
 
       {/* Mobile navigation */}
       <div
-        className={`sm:hidden bg-white absolute left-0 w-full h-full flex flex-col items-start py-4 text-lg transition-all duration-300 z-30 ${
+        className={`sm:hidden bg-white absolute left-0 w-full min-h-screen flex flex-col items-start py-4 text-lg transition-all duration-300 z-30 ${
           isMobileMenuOpen ? 'translate-x-0' : 'opacity-0 -translate-x-full'
         }`}
       >

@@ -10,10 +10,17 @@
     "format": "biome check --fix"
   },
   "dependencies": {
+    "@react-pdf-viewer/core": "^3.12.0",
+    "@react-pdf-viewer/default-layout": "^3.12.0",
+    "canvas": "^3.1.0",
     "lucide-react": "^0.487.0",
     "next": "15.1.6",
+    "pdfjs-dist": "3.4.120",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-masonry-css": "^1.0.16",
+    "react-photo-album": "^3.1.0",
+    "yet-another-react-lightbox": "^3.23.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
