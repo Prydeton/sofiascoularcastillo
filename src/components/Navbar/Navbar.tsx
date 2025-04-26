@@ -91,10 +91,12 @@ const Navbar = () => {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm md:text-base block text-center py-1
+              className={`text-sm md:text-base block text-center py-1 relative
     ${interFont.className}
-    transition-all duration-300
-    ${isActive(link.href) ? 'text-black font-medium' : 'text-gray-500 hover:text-black'}`}
+    transition-all duration-300 text-black
+    after:content-[''] after:absolute after:w-0 after:h-[1px] after:bg-black 
+    after:left-0 after:bottom-0 after:transition-all after:duration-300
+    ${isActive(link.href) ? 'after:w-full' : 'hover:after:w-full'}`}
               aria-current={isActive(link.href) ? 'page' : undefined}
             >
               {link.label}
@@ -107,11 +109,11 @@ const Navbar = () => {
               key={link.href}
               href={link.href}
               className={`text-sm md:text-base block text-center py-1 relative
-                ${interFont.className}
-                ${isActive(link.href) ? 'underline' : 'no-underline'}
-                after:content-[''] after:absolute after:w-0 after:h-[1px] after:bg-black 
-                after:left-0 after:bottom-0 after:transition-all after:duration-300
-                hover:after:w-full`}
+    ${interFont.className}
+    transition-all duration-300 text-black
+    after:content-[''] after:absolute after:w-0 after:h-[1px] after:bg-black 
+    after:left-0 after:bottom-0 after:transition-all after:duration-300
+    ${isActive(link.href) ? 'after:w-full' : 'hover:after:w-full'}`}
               aria-current={isActive(link.href) ? 'page' : undefined}
             >
               {link.label}

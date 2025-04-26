@@ -2,7 +2,7 @@ import { Gallery } from '@/app/gallery/Gallery'
 import { Category } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 type Props = {
   params: Promise<{
@@ -17,15 +17,16 @@ export const generateStaticParams = () => {
     category: category,
   }))
 }
+
 const GalleryPage = async ({ params }: Props) => {
   const resolvedParams = await params
   const category = resolvedParams.category as Category
 
-  const filteredImages = Gallery.filter((piece) => piece.category === category)
-
-  if (!filteredImages.length) {
-    notFound()
+  if (!categories.includes(category)) {
+    redirect('/showcase')
   }
+
+  const filteredImages = Gallery.filter((piece) => piece.category === category)
 
   return (
     <div className="w-[80%] md:w-[95%] max-w-[2000px] mx-auto">
