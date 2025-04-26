@@ -29,7 +29,7 @@ const GalleryPage = async ({ params }: Props) => {
 
   return (
     <div className="w-[80%] md:w-[95%] max-w-[2000px] mx-auto">
-      <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 w-full capitalize text-center">{category}</h2>
+      <h2 className="text-xl sm:text-2xl mb-4 sm:mb-6 w-full capitalize text-center">{category}</h2>
       <div className="grid auto-rows-[1fr] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2">
         {filteredImages.map((piece, index) => (
           <Link key={index} href={piece.link} className="relative block aspect-square w-full group cursor-pointer">

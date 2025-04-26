@@ -30,7 +30,6 @@ const Navbar = () => {
   const pathname = usePathname()
   const isActive = (href: string) => pathname === href
 
-  // Add scroll event listener
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0)
@@ -39,16 +38,27 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMobileMenuOpen])
+
   return (
     <nav
       className={`w-full p-4 sm:relative fixed top-0 left-0 bg-white z-40 transition-shadow duration-300
       ${isScrolled ? 'shadow-md' : ''}`}
     >
       <div className="flex justify-center items-center">
-        <Link href="/" className="w-full">
+        <Link href="/" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
           <h1 className="text-2xl sm:text-xl md:text-4xl font-bold text-center hover:opacity-80 transition-opacity flex flex-col">
-            <span>SOFIA</span>
-            <span>SCOULAR CASTILLO</span>
+            <span>Sofia</span>
+            <span>Scoular Castillo</span>
           </h1>
         </Link>
         <button
@@ -77,13 +87,14 @@ const Navbar = () => {
       {/* Desktop */}
       <div className="hidden sm:flex flex-col items-center gap-4 mt-4">
         <div className="grid grid-cols-3 w-[400px] max-w-full">
-          {MAIN_LINKS.map((link, i) => (
+          {MAIN_LINKS.map((link) => (
             <Link
-              key={i}
+              key={link.href}
               href={link.href}
-              className={`text-sm md:text-base block text-center py-1 ${
-                isActive(link.href) ? 'underline' : 'hover:underline'
-              } ${interFont.className}`}
+              className={`text-sm md:text-base block text-center py-1
+    ${interFont.className}
+    transition-all duration-300
+    ${isActive(link.href) ? 'text-black font-medium' : 'text-gray-500 hover:text-black'}`}
               aria-current={isActive(link.href) ? 'page' : undefined}
             >
               {link.label}
@@ -91,13 +102,16 @@ const Navbar = () => {
           ))}
         </div>
         <div className="grid grid-cols-6 w-[1000px] max-w-full">
-          {GALLERY_LINKS.map((link, i) => (
+          {GALLERY_LINKS.map((link) => (
             <Link
-              key={i}
+              key={link.href}
               href={link.href}
-              className={`text-sm md:text-base block text-center py-1 ${
-                isActive(link.href) ? 'underline' : 'hover:underline'
-              } ${interFont.className}`}
+              className={`text-sm md:text-base block text-center py-1 relative
+                ${interFont.className}
+                ${isActive(link.href) ? 'underline' : 'no-underline'}
+                after:content-[''] after:absolute after:w-0 after:h-[1px] after:bg-black 
+                after:left-0 after:bottom-0 after:transition-all after:duration-300
+                hover:after:w-full`}
               aria-current={isActive(link.href) ? 'page' : undefined}
             >
               {link.label}
