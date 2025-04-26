@@ -3,22 +3,52 @@
 import { interFont } from '@/app/styles/fonts'
 import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-const MAIN_LINKS = ['About', 'Showcase', 'Contact'] as const
-const GALLERY_LINKS = ['Graphics', 'Film', 'Multimedia', 'Photography', 'Sculptural', 'Fine Arts'] as const
+type NavLink = {
+  label: string
+  href: string
+}
+
+const MAIN_LINKS: NavLink[] = ['About', 'Showcase', 'Contact'].map((link) => ({
+  label: link,
+  href: `/${link.toLowerCase()}`,
+}))
+
+const GALLERY_LINKS: NavLink[] = ['Graphics', 'Film', 'Multimedia', 'Photography', 'Sculptural', 'Fine Arts'].map(
+  (link) => ({
+    label: link,
+    href: `/gallery/${link.toLowerCase().replace(' ', '-')}`,
+  }),
+)
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
+  const [isScrolled, setIsScrolled] = useState(false)
   const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev)
+  const pathname = usePathname()
+  const isActive = (href: string) => pathname === href
+
+  // Add scroll event listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    <nav className="w-full p-4 sm:relative fixed top-0 left-0 bg-white z-40">
+    <nav
+      className={`w-full p-4 sm:relative fixed top-0 left-0 bg-white z-40 transition-shadow duration-300
+      ${isScrolled ? 'shadow-md' : ''}`}
+    >
       <div className="flex justify-center items-center">
         <Link href="/" className="w-full">
-          <h1 className="text-xl sm:text-2xl md:text-4xl font-bold text-center hover:opacity-80 transition-opacity">
-            SOFIA SCOULAR CASTILLO
+          <h1 className="text-2xl sm:text-xl md:text-4xl font-bold text-center hover:opacity-80 transition-opacity flex flex-col">
+            <span>SOFIA</span>
+            <span>SCOULAR CASTILLO</span>
           </h1>
         </Link>
         <button
@@ -27,7 +57,20 @@ const Navbar = () => {
           onClick={toggleMobileMenu}
           aria-label="Toggle mobile menu"
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          <div className="relative w-9 h-9">
+            <Menu
+              className={`absolute inset-0 transition-all duration-300 ${
+                isMobileMenuOpen ? 'opacity-0 rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100'
+              }`}
+              size={36}
+            />
+            <X
+              className={`absolute inset-0 transition-all duration-300 ${
+                isMobileMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'
+              }`}
+              size={36}
+            />
+          </div>
         </button>
       </div>
 
@@ -37,10 +80,13 @@ const Navbar = () => {
           {MAIN_LINKS.map((link, i) => (
             <Link
               key={i}
-              href={`/${link}`}
-              className={`text-sm md:text-base block text-center py-1 hover:underline ${interFont.className}`}
+              href={link.href}
+              className={`text-sm md:text-base block text-center py-1 ${
+                isActive(link.href) ? 'underline' : 'hover:underline'
+              } ${interFont.className}`}
+              aria-current={isActive(link.href) ? 'page' : undefined}
             >
-              {link}
+              {link.label}
             </Link>
           ))}
         </div>
@@ -48,10 +94,13 @@ const Navbar = () => {
           {GALLERY_LINKS.map((link, i) => (
             <Link
               key={i}
-              href={`/gallery/${link.replace(' ', '-').toLowerCase()}`}
-              className={`text-sm md:text-base block text-center py-1 hover:underline ${interFont.className}`}
+              href={link.href}
+              className={`text-sm md:text-base block text-center py-1 ${
+                isActive(link.href) ? 'underline' : 'hover:underline'
+              } ${interFont.className}`}
+              aria-current={isActive(link.href) ? 'page' : undefined}
             >
-              {link}
+              {link.label}
             </Link>
           ))}
         </div>
@@ -63,19 +112,31 @@ const Navbar = () => {
           isMobileMenuOpen ? 'translate-x-0' : 'opacity-0 -translate-x-full'
         }`}
       >
-        {MAIN_LINKS.map((link, i) => (
-          <Link key={i} href={`/${link}`} className={`block w-full px-2 py-1 text-xl ${interFont.className}`}>
-            {link}
+        {MAIN_LINKS.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={`block w-full px-2 py-1 text-xl ${
+              isActive(link.href) ? 'underline' : ''
+            } ${interFont.className}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+          >
+            {link.label}
           </Link>
         ))}
-        <div className="w-full my-2 border-t border-gray-200" /> {/* Divider */}
-        {GALLERY_LINKS.map((link, i) => (
+        <div className="w-full my-2 border-t border-gray-200" />
+        {GALLERY_LINKS.map((link) => (
           <Link
-            key={i}
-            href={`/gallery/${link.replace(' ', '-').toLowerCase()}`}
-            className={`block w-full px-2 py-1 text-xl ${interFont.className}`}
+            key={link.href}
+            href={link.href}
+            className={`block w-full px-2 py-1 text-xl ${
+              isActive(link.href) ? 'underline' : ''
+            } ${interFont.className}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-current={isActive(link.href) ? 'page' : undefined}
           >
-            {link}
+            {link.label}
           </Link>
         ))}
       </div>

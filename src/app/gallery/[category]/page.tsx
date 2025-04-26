@@ -1,7 +1,8 @@
+import { Gallery } from '@/app/gallery/Gallery'
+import { Category } from '@/types'
+import Image from 'next/image'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
-
-const categories = ['graphics', 'film', 'multimedia', 'photography', 'sculptural', 'fine-arts'] as const
-type Category = (typeof categories)[number]
 
 type Props = {
   params: Promise<{
@@ -9,25 +10,48 @@ type Props = {
   }>
 }
 
+const categories = Object.values(Category)
+
 export const generateStaticParams = () => {
   return categories.map((category) => ({
-    category,
+    category: category,
   }))
 }
-
 const GalleryPage = async ({ params }: Props) => {
   const resolvedParams = await params
   const category = resolvedParams.category as Category
 
-  if (!categories.includes(category)) {
+  const filteredImages = Gallery.filter((piece) => piece.category === category)
+
+  if (!filteredImages.length) {
     notFound()
   }
 
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold mb-8 capitalize">{category}</h1>
-      Gallery content for {category} category will be displayed here.
-      <p className="mt-4 text-lg">Coming soon...</p>
+    <div className="w-[80%] md:w-[95%] max-w-[2000px] mx-auto">
+      <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 w-full capitalize text-center">{category}</h2>
+      <div className="grid auto-rows-[1fr] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-2">
+        {filteredImages.map((piece, index) => (
+          <Link key={index} href={piece.link} className="relative block aspect-square w-full group cursor-pointer">
+            <Image
+              src={piece.src}
+              alt={piece.alt}
+              fill
+              sizes="(min-width: 1536px) 25vw,
+                     (min-width: 1280px) 33vw,
+                     (min-width: 768px) 50vw,
+                     100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-80 transition-opacity duration-300" />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="text-center p-4">
+                <h2 className="text-xl font-bold">{piece.title}</h2>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   )
 }
